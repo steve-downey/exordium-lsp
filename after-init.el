@@ -9,15 +9,14 @@
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :init
-  (setq-default lsp-clients-clangd-executable "clangd-10")
+  (setq-default lsp-clients-clangd-executable "clangd-9")
 
   :commands (lsp lsp-deferred)
 
   :config
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
-
-  (setq lsp-prefer-flymake nil) ;; flycheck
-
+  (setq lsp-diagnostic-package :auto)
+  (setq lsp-flycheck-live-reporting t)
   ;; company mode configuration for lsp-mode
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.0)
@@ -29,15 +28,13 @@
   (use-package lsp-ui
     :requires lsp-mode flycheck
     :init
-    (setq lsp-ui-doc-enable nil
+    (setq lsp-ui-doc-enable t
           lsp-ui-doc-use-childframe t
           lsp-ui-doc-position 'top
           lsp-ui-doc-include-signature t
           lsp-ui-sideline-enable t
-          lsp-ui-flycheck-enable t
           lsp-ui-flycheck-list-position 'right
-          lsp-ui-flycheck-live-reporting t
-          lsp-ui-peek-enable nil
+          lsp-ui-peek-enable t
           lsp-ui-peek-list-width 60
           lsp-ui-peek-peek-height 25)
     :commands lsp-ui-mode)
