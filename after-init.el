@@ -20,7 +20,8 @@
 (use-package lsp-mode
   :hook ((c-mode-common  . lsp-deferred))
   :init
-  (setq-default lsp-clients-clangd-executable exordium-lsp-clangd-executable)
+  (setq-default lsp-clients-clangd-executable
+                (seq-find #'executable-find exordium-lsp-clangd-executable))
 
   :commands (lsp lsp-deferred)
 
