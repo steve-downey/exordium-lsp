@@ -1,22 +1,34 @@
-;;; LSP Initialization
+;;; after-init.el --- LSP support for Exordium
+
+;;; Commentary:
+
+;;; Code:
+
+(use-package flycheck
+  :commands flycheck-mode
+  :init (global-flycheck-mode))
+
+(use-package flycheck-pos-tip
+  :after flycheck
+  :defines flycheck-pos-tip-timeout
+  :hook (global-flycheck-mode . flycheck-pos-tip-mode)
+  :config (setq flycheck-pos-tip-timeout 30))
 
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 (setq lsp-keymap-prefix "C-c l")
 
 (use-package lsp-mode
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (c-mode-common  . lsp-deferred)
-         ;;(python-mode . lsp-deferred)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+  :hook ((c-mode-common  . lsp-deferred))
   :init
-  (setq-default lsp-clients-clangd-executable "clangd-9")
+  (setq-default lsp-clients-clangd-executable exordium-lsp-clangd-executable)
 
   :commands (lsp lsp-deferred)
 
   :config
-  (setq lsp-clients-clangd-args '("-j=4" "--background-index" "--log=error --clang-tidy"))
-  (setq lsp-diagnostic-package :auto)
+  (if exordium-enable-which-key
+      (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+  (setq lsp-clients-clangd-args exordium-lsp-clangd-args)
+  (setq lsp-diagnostic-package :flycheck)
   (setq lsp-flycheck-live-reporting t)
   ;; company mode configuration for lsp-mode
   (setq company-minimum-prefix-length 1
@@ -26,25 +38,22 @@
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   )
 
-;; optionally
 (use-package lsp-ui
   :after lsp-mode
-  :defer
   :init
   (setq lsp-ui-doc-enable t
         lsp-ui-doc-use-childframe t
-        lsp-ui-doc-position 'top
+        lsp-ui-doc-position 'bottom
         lsp-ui-doc-include-signature t
         lsp-ui-sideline-enable t
-        lsp-ui-flycheck-list-position 'right
+        lsp-ui-flycheck-enable t
+        lsp-ui-flycheck-list-position 'bottom
         lsp-ui-peek-enable t
-        lsp-ui-peek-list-width 60
-        lsp-ui-peek-peek-height 25)
+        )
   :commands lsp-ui-mode)
 
 (use-package company-lsp
   :after lsp-mode
-  :defer
   :config
   (push 'company-lsp company-backends)
 
@@ -55,10 +64,9 @@
         company-lsp-enable-recompletion t)
   :commands company-lsp)
 
-;; if you are helm user
 (use-package helm-lsp
   :after lsp-mode
-  :defer
+  :if exordium-helm-everywhere
   :commands
   (helm-lsp-workspace-symbol
    helm-lsp-global-workspace-symbol
@@ -66,15 +74,14 @@
 
 (use-package lsp-treemacs
   :after lsp-mode
-  :defer
   :commands lsp-treemacs-errors-list)
 
-;; optionally if you want to use debugger
 (use-package dap-mode
   :requires dap-lldb)
 
-;; optional if you want which-key integration
 (use-package which-key
+  :if exordium-enable-which-key
   :config
   (which-key-mode))
-;;; End of file
+
+;;; after-init.el ends here
