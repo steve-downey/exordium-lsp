@@ -18,7 +18,7 @@
 (setq lsp-keymap-prefix "C-c l")
 
 (use-package lsp-mode
-  :hook ((c-mode-common  . lsp-deferred))
+  :hook ((c-mode-common  . lsp))
   :init
   (setq-default lsp-clients-clangd-executable
                 (seq-find #'executable-find exordium-lsp-clangd-executable))
