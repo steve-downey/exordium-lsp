@@ -22,7 +22,6 @@
   :init
   (setq-default lsp-clients-clangd-executable
                 (seq-find #'executable-find exordium-lsp-clangd-executable))
-
   :commands (lsp lsp-deferred)
 
   :config
@@ -66,7 +65,7 @@
   :commands company-lsp)
 
 (use-package helm-lsp
-  :after lsp-mode
+  :after (lsp-mode helm)
   :if exordium-helm-everywhere
   :commands
   (helm-lsp-workspace-symbol
