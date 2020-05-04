@@ -28,7 +28,7 @@ Default is to choose the first that is found via `executable-find'."
   :risky t
   :type 'exordium-string-vector)
 
-(defcustom exordium-lsp-clangd-args '("-j=4" "--background-index" "--log=verbose" "--clang-tidy")
+(defcustom exordium-lsp-clangd-args '("-j=4" "--background-index" "--log=error" "--clang-tidy")
   "Extra arguments for the clangd executable."
   :group 'exordium
   :risky t
