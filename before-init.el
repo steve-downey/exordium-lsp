@@ -39,4 +39,28 @@ Default is to choose the first that is found via `executable-find'."
   :group 'exordium
   :type  'boolean)
 
+(defcustom exordium-lsp-keymap-prefix "C-c l"
+  "The prefix to bind the lsp keymap to, `kbd' format"
+  :group 'exordium
+  :type  'string)
+
+(defcustom exordium-lsp-ui-doc-position 'bottom
+  "Where to display the doc in LSP mode."
+  :group 'exordium
+  :type '(choice (const :tag "Top" top)
+                 (const :tag "Bottom" bottom)
+                 (const :tag "At point" at-point)))
+
+(defcustom exordium-lsp-ui-flycheck-list-position 'bottom
+  "Position where `lsp-ui-flycheck-list' will show diagnostics for the whole workspace."
+  :group 'exordium
+  :type '(choice (const :tag "Bottom" bottom)
+                 (const :tag "Right" right)))
+
+(defcustom exordium-lsp-mode-enable t
+  "Enable lsp-mode"
+  :group 'exordium
+  :type 'boolean)
+
+
 ;;; after-init.el ends here

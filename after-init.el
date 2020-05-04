@@ -15,9 +15,10 @@
   :config (setq flycheck-pos-tip-timeout 30))
 
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-(setq lsp-keymap-prefix "C-c l")
+(setq lsp-keymap-prefix exordium-lsp-keymap-prefix)
 
 (use-package lsp-mode
+  :if exordium-lsp-mode-enable
   :hook ((c-mode-common  . lsp))
   :init
   (setq-default lsp-clients-clangd-executable
@@ -43,11 +44,11 @@
   :init
   (setq lsp-ui-doc-enable t
         lsp-ui-doc-use-childframe t
-        lsp-ui-doc-position 'bottom
+        lsp-ui-doc-position exordium-lsp-ui-doc-position
         lsp-ui-doc-include-signature t
         lsp-ui-sideline-enable t
         lsp-ui-flycheck-enable t
-        lsp-ui-flycheck-list-position 'bottom
+        lsp-ui-flycheck-list-position exordium-lsp-ui-flycheck-list-position
         lsp-ui-peek-enable t
         )
   :commands lsp-ui-mode)
