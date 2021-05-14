@@ -32,11 +32,15 @@
   (setq lsp-diagnostic-package :flycheck)
   (setq lsp-flycheck-live-reporting t)
   ;; company mode configuration for lsp-mode
+  (setq lsp-completion-provider :capf)
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.0)
 
   ;; process buffer for the LSP server needs to be larger
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
+
+  ;; semantic hilite via lsp server
+  (setq lsp-enable-semantic-highlighting t)
   )
 
 (use-package lsp-ui
@@ -52,18 +56,6 @@
         lsp-ui-peek-enable t
         )
   :commands lsp-ui-mode)
-
-(use-package company-lsp
-  :after lsp-mode
-  :config
-  (push 'company-lsp company-backends)
-
-  ;; Disable client-side cache because the LSP server does a better job.
-  (setq company-transformers nil
-        company-lsp-async t
-        company-lsp-cache-candidates nil
-        company-lsp-enable-recompletion t)
-  :commands company-lsp)
 
 (use-package helm-lsp
   :after (lsp-mode helm)
