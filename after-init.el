@@ -70,7 +70,12 @@
   :commands lsp-treemacs-errors-list)
 
 (use-package dap-mode
-  :requires dap-lldb)
+  :requires (dap-lldb dap-cpptools dap-gdb-lldb)
+  :init
+  (setq lsp-enable-dap-auto-configure t)
+  :config
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1))
 
 (use-package which-key
   :if exordium-enable-which-key
