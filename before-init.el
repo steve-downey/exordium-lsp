@@ -21,7 +21,7 @@ serialize as a JSON array of strings."
   :type '(restricted-sexp
           :match-alternatives (lsp--string-vector-p)))
 
-(defcustom exordium-lsp-clangd-executable ["clangd-11" "clangd-10" "clangd-9" "clangd"]
+(defcustom exordium-lsp-clangd-executable ["clangd-13" "clangd-12" "clangd-11" "clangd-10" "clangd-9" "clangd"]
   "List of executable names to search for to run clangd.
 Default is to choose the first that is found via `executable-find'."
   :group 'exordium
